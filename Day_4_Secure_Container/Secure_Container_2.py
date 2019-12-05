@@ -39,23 +39,6 @@ def CheckForDoubleDigit(lst):
                 match = True
     
     return match
-"""
-    match = False
-    digit = lst[len(lst)-1]
-    for pos in range(len(lst) - 1,1,-1):
-        if lst[pos] == lst[pos-1]:
-            if pos - 2 >= 0:
-                if lst[pos - 1] == lst[pos - 2]:
-                    digit = lst[pos]
-                    match = False
-                elif lst[pos - 1] == digit:
-                    match = False
-                else:
-                    return True
-            else:
-                return True
-
-    return match"""
 
 def CheckRecursion(lst,pos,match):
     if pos == 0:
@@ -103,35 +86,21 @@ def InitPassword(pword,min):
 
     return pword
 
-minRange = 367479
-maxRange = 893698
-password = []
+def main():
 
-"""
-password1 = [1,1,2,2,3,3]
-password2 = [1,2,3,4,4,4]
-password3 = [1,1,1,1,2,2]
-password4 = [1,1,2,2,2,3]
+    minRange = 367479
+    maxRange = 893698
+    password = []
 
+    password = InitPassword(password,minRange)
 
-pass1 = CheckForDoubleDigit(password1)
-pass2 = CheckForDoubleDigit(password2)
-pass3 = CheckForDoubleDigit(password3)
-pass4 = CheckForDoubleDigit(password4)
+    count = 0
 
-print('pass1 = Expected: True | Actual: ' + str(pass1))
-print('Pass2 = Expected: False | Actual: ' + str(pass2))
-print('Pass3 = Expected: True | Actual: ' + str(pass3))
-print('Pass3 = Expected: True | Actual: ' + str(pass4))
-"""
+    while Combinelst(password) <= maxRange:
+        if CheckPassword(password,minRange,maxRange):
+            count += 1
+        password = IncrementPassword(password)
 
-password = InitPassword(password,minRange)
+    print(str(count))
 
-count = 0
-
-while Combinelst(password) <= maxRange:
-    if CheckPassword(password,minRange,maxRange):
-        count += 1
-    password = IncrementPassword(password)
-
-print(str(count))
+main()

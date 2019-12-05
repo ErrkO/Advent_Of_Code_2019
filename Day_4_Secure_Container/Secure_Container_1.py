@@ -62,19 +62,23 @@ def InitPassword(pword,min):
 
     return pword
 
-minRange = 367479
-maxRange = 893698
-password = []
+def main():
 
-#password = [8,9,9,9,9,9]
+    minRange = 367479
+    maxRange = 893698
+    password = []
 
-password = InitPassword(password,minRange)
+    #password = [8,9,9,9,9,9]
 
-count = 0
+    password = InitPassword(password,minRange)
 
-while Combinelst(password) <= maxRange:
-    if CheckPassword(password,minRange,maxRange):
-        count += 1
-    password = IncrementPassword(password)
+    count = 0
 
-print(str(count))    
+    while Combinelst(password) <= maxRange:
+        if CheckPassword(password,minRange,maxRange):
+            count += 1
+        password = IncrementPassword(password)
+
+    print(str(count))    
+
+main()

@@ -1,9 +1,5 @@
 import re
 
-#intcode = '2,3,0,3,99'
-
-#def GetOpCodes() 
-
 def Compute(list):
     opcode = 0
     iter = 0
@@ -33,27 +29,31 @@ def Compute(list):
 def ComputeAnswer(noun,verb):
     return (100 * noun) + verb
 
-intcode = open('C:\\Users\\eoliver\\OneDrive - inBusiness Services, Inc\\Documents\\Scripts\\AdventCode\\inputs.txt','r')
+def main():
 
-opCodes = re.split(r',',intcode.readline())
+    intcode = open('C:\\Users\\eoliver\\OneDrive - inBusiness Services, Inc\\Documents\\Scripts\\AdventCode\\inputs.txt','r')
 
-opCodes = list(map(int,opCodes))
+    opCodes = re.split(r',',intcode.readline())
 
-noun = 0
-vewrb = 0
-finalval = 0
+    opCodes = list(map(int,opCodes))
 
-for i in range(0,99):
-    for j in range(0,99):
-        opCopy = opCodes[:]
-        noun = i
-        verb = j
-        opCopy[1] = noun
-        opCopy[2] = verb
-        finalval = Compute(opCopy)
+    noun = 0
+    verb = 0
+    finalval = 0
+
+    for i in range(0,99):
+        for j in range(0,99):
+            opCopy = opCodes[:]
+            noun = i
+            verb = j
+            opCopy[1] = noun
+            opCopy[2] = verb
+            finalval = Compute(opCopy)
+            if finalval == 19690720:
+                break
         if finalval == 19690720:
-            break
-    if finalval == 19690720:
-            break
+                break
 
-print(str(ComputeAnswer(noun,verb)))
+    print(str(ComputeAnswer(noun,verb)))
+
+main()
