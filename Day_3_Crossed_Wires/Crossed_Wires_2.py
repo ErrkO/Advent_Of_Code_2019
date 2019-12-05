@@ -111,41 +111,43 @@ def StepCounter(p1,p2,directions,index):
 
     return steps
 
+def main():
 
+    #wires = open('C:\\Users\\eoliver\\OneDrive - inBusiness Services, Inc\\Documents\\Scripts\\AdventCode\\Day_3\\wires.txt','r')
 
-#wires = open('C:\\Users\\eoliver\\OneDrive - inBusiness Services, Inc\\Documents\\Scripts\\AdventCode\\Day_3\\wires.txt','r')
+    #wire1 = re.split(r',',wires.readline())
+    #wire2 = re.split(r',',wires.readline())
 
-#wire1 = re.split(r',',wires.readline())
-#wire2 = re.split(r',',wires.readline())
+    wire1 = re.split(r',','R75,D30,R83,U83,L12,D49,R71,U7,L72')
+    wire2 = re.split(r',','U62,R66,U55,R34,D71,R55,D58,R83')
 
-wire1 = re.split(r',','R75,D30,R83,U83,L12,D49,R71,U7,L72')
-wire2 = re.split(r',','U62,R66,U55,R34,D71,R55,D58,R83')
+    wire1path = []
+    wire2path = []
 
-wire1path = []
-wire2path = []
+    wire1path.append(Point(0,0))
+    wire2path.append(Point(0,0))
 
-wire1path.append(Point(0,0))
-wire2path.append(Point(0,0))
+    intersectionDist = []
+    steps = []
 
-intersectionDist = []
-steps = []
+    wire1path = MapPath(wire1,wire1path)
+    wire2path = MapPath(wire2,wire2path)
 
-wire1path = MapPath(wire1,wire1path)
-wire2path = MapPath(wire2,wire2path)
+    for i in range(1,len(wire1path)):
+        for j in range(1,len(wire2path)):
+            if Intersection(wire1path[i-1],wire1path[i],wire2path[j-1],wire2path[j]):
+                point = IntersectionPoint(wire1path[i-1],wire1path[i],wire2path[j-1],wire2path[j])
 
-for i in range(1,len(wire1path)):
-    for j in range(1,len(wire2path)):
-        if Intersection(wire1path[i-1],wire1path[i],wire2path[j-1],wire2path[j]):
-            point = IntersectionPoint(wire1path[i-1],wire1path[i],wire2path[j-1],wire2path[j])
+                wire1Steps = StepCounter(wire1path[i-1],point,wire1,i)
+                wire2Steps = StepCounter(wire2path[j-1],point,wire2,j)
 
-            wire1Steps = StepCounter(wire1path[i-1],point,wire1,i)
-            wire2Steps = StepCounter(wire2path[j-1],point,wire2,j)
+                steps.append(wire1Steps + wire2Steps)
+                intersectionDist.append(ManhattenDistance(wire1path[0],point))
 
-            steps.append(wire1Steps + wire2Steps)
-            intersectionDist.append(ManhattenDistance(wire1path[0],point))
+    closepoint = GetSmallest(intersectionDist)
+    smallstep = GetSmallest(steps)
 
-closepoint = GetSmallest(intersectionDist)
-smallstep = GetSmallest(steps)
+    print('Closest Point distance ' + str(closepoint))
+    print('Shortest step ' + str(smallstep))
 
-print('Closest Point distance ' + str(closepoint))
-print('Shortest step ' + str(smallstep))
+main()

@@ -12,17 +12,19 @@ def FuelForModule(fuel):
 
     return totalForModule
 
-def main():
-
-    inputs = open("F:\\Users\\erico\\Code_Projects\\Advent_Of_Code\\Day_1\\Problem_1\\Inputs.txt","r")
-
+def CalculateFuel(lst):
     totalFuel = 0
 
-    for i in inputs:
+    for i in lst:
+        totalFuel += Calculate(i)
+
+    return totalFuel
+
+def CalculateTotalFuel(lst):
+    totalFuel = 0
+
+    for i in lst:
         fuelForModule = FuelForModule(int(i))
         totalFuel += fuelForModule
 
-    print('Actual fuel is: 50346')
-    print('Estimated fuel is: ' + str(totalFuel))
-
-main()
+    return totalFuel
