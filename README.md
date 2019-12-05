@@ -2,3 +2,8 @@
 
 
 Repo to contain code for the advent calendar of code project
+
+
+TO DO
+
+Finish Day 3 part 2
