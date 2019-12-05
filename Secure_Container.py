@@ -31,6 +31,22 @@ def CheckForDoubleDigit(lst):
 
     return False
 
+def CheckForDoubleDigit_2(lst):
+    digit = -1
+    match = False
+
+    for i in range(0,len(lst)-1):
+        if match and lst[i+1] != digit:
+            return True
+        if lst[i] == lst[i+1]:
+            if lst[i+1] == digit:
+                match = False
+            else:
+                digit = lst[i]
+                match = True
+    
+    return match
+
 def CheckForAscending(lst):
     for i in range(0,len(lst)-1):
         if lst[i] > lst[i+1]:
@@ -52,6 +68,12 @@ def CheckPassword(lst,min,max):
             return True
     return False
 
+def CheckPassword_2(lst,min,max):
+    if CheckForDoubleDigit_2(lst) and CheckForAscending(lst) and lst[0] < 10:
+        if CheckBounds(lst,min,max):
+            return True
+    return False
+
 def InitPassword(pword,min):
     digit = GetFirstDigit(min)
 
@@ -61,24 +83,3 @@ def InitPassword(pword,min):
         pword.append(digit)
 
     return pword
-
-def main():
-
-    minRange = 367479
-    maxRange = 893698
-    password = []
-
-    #password = [8,9,9,9,9,9]
-
-    password = InitPassword(password,minRange)
-
-    count = 0
-
-    while Combinelst(password) <= maxRange:
-        if CheckPassword(password,minRange,maxRange):
-            count += 1
-        password = IncrementPassword(password)
-
-    print(str(count))    
-
-main()

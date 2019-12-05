@@ -12,6 +12,14 @@ class Point:
 def AddPoint(point,x,y):
     return Point(point.X + x,point.Y + y)
 
+def GetSmallest(lst):
+    smallest = lst[1]
+    for item in lst:
+        if item != 0:
+            if item < smallest:
+                smallest = item
+    return smallest
+
 def ManhattenDistance(p1,p2):
     return abs(p1.X - p2.X) + abs(p1.Y - p2.Y)
 
@@ -92,40 +100,13 @@ def IntersectionPoint(p11,p12,p21,p22):
 
     return Point(x,y)
 
-def main():
+def StepCounter(p1,p2,directions,index):
+    steps = 0
+    for i in range(0,index + 1):
+        if i == index:
+            steps += ManhattenDistance(p1,p2)
+        else:
+            magnitude = int(re.split(r'(R|U|D|L)',directions[i])[2])
+            steps += magnitude
 
-    wires = open('C:\\Users\\eoliver\\OneDrive - inBusiness Services, Inc\\Documents\\Scripts\\AdventCode\\Day_3\\wires.txt','r')
-
-    wire1 = re.split(r',',wires.readline())
-    wire2 = re.split(r',',wires.readline())
-
-    #wire1 = re.split(r',','R75,D30,R83,U83,L12,D49,R71,U7,L72')
-    #wire2 = re.split(r',','U62,R66,U55,R34,D71,R55,D58,R83')
-
-    wire1path = []
-    wire2path = []
-
-    wire1path.append(Point(0,0))
-    wire2path.append(Point(0,0))
-
-    intersectionDist = []
-
-    wire1path = MapPath(wire1,wire1path)
-    wire2path = MapPath(wire2,wire2path)
-
-    for i in range(1,len(wire1path)):
-        for j in range(1,len(wire2path)):
-            if Intersection(wire1path[i-1],wire1path[i],wire2path[j-1],wire2path[j]):
-                point = IntersectionPoint(wire1path[i-1],wire1path[i],wire2path[j-1],wire2path[j])
-                intersectionDist.append(ManhattenDistance(wire1path[0],point))
-
-    smallest = intersectionDist[1]
-
-    for dist in intersectionDist:
-        if dist != 0:
-            if dist < smallest:
-                smallest = dist
-
-    print(smallest)
-
-main()
+    return steps
