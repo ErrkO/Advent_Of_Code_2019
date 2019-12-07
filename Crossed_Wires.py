@@ -9,6 +9,15 @@ class Point:
         self.X = x
         self.Y = y
 
+    def __eq__(self,p2):
+        if self.X == p2.X and self.Y == p2.Y:
+            return True
+        else:
+            return False
+
+    def __str__(self):
+        return '(' + str(self.X) + ',' + str(self.Y) + ')'
+
 def AddPoint(point,x,y):
     return Point(point.X + x,point.Y + y)
 
@@ -39,7 +48,7 @@ def MapPath(directions,path):
 
         path.append(pNext)
 
-    return path
+    return path[1:]
 
 def OnSegment(p1,p2,p3):
     if (p2.X <= max(p1.X,p3.X) and
