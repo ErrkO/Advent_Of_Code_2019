@@ -27,10 +27,10 @@ def Input(lst,index,inval):
 
     return lst
 
-def Output(lst,index):
-    pos1 = lst[index+1]
+def Output(lst,index,params):
+    val = InterperateMode(lst,index+1,params[1])
 
-    return str(lst[pos1])
+    return str(val)
 
 def JumpIfTrue(lst,index,params):
     val1 = InterperateMode(lst,index+1,params[1])
@@ -107,6 +107,44 @@ def InterperateMode(lst,index,param):
 
     return val
 
+def Execute(instruction,paramaters,lst,input):
+    if parameters[0] == 1:
+        lst = Add(lst,iter,parameters)
+        iter += 4
+    elif parameters[0] == 2:
+        lst = Multiply(lst,iter,parameters)
+        iter += 4
+    elif parameters[0] == 3:
+        lst = Input(lst,iter,input)
+        iter += 2
+    elif parameters[0] == 4:
+        print('Diag Code ' + str(diag) + ': ' + Output(lst,iter))
+        diag += 1
+        iter += 2
+    elif parameters[0] == 5:
+        paraPtr = JumpIfTrue(lst,iter,parameters)
+        if paraPtr == iter:
+            iter += 3
+        else:
+            para = lst[paraPtr]
+            jump = True
+    elif parameters[0] == 6:
+        paraPtr = JumpIfFalse(lst,iter,parameters)
+        if paraPtr == iter:
+            iter += 3
+        else:
+            para = lst[paraPtr]
+            jump = True
+    elif parameters[0] == 7:
+        lst = LessThan(lst,iter,parameters)
+        iter += 4
+    elif parameters[0] == 8:
+        lst = EqualTo(lst,iter,parameters)
+        iter += 4
+    elif lst[iter] == 99:
+        print('HALT')
+        opcode = 99
+
 def Compute(lst,input):
     opcode = 0
     iter = 0
@@ -115,7 +153,6 @@ def Compute(lst,input):
     para = 0
 
     while opcode != 99:
-        print(iter)
         if jump:
             params = Parameterize(para)
             jump = False
@@ -132,7 +169,7 @@ def Compute(lst,input):
             lst = Input(lst,iter,input)
             iter += 2
         elif params[0] == 4:
-            print('Diag Code ' + str(diag) + ': ' + Output(lst,iter))
+            print('Diag Code ' + str(diag) + ': ' + Output(lst,iter,params))
             diag += 1
             iter += 2
         elif params[0] == 5:
@@ -141,6 +178,7 @@ def Compute(lst,input):
                 iter += 3
             else:
                 para = lst[paraPtr]
+                iter = paraPtr
                 jump = True
         elif params[0] == 6:
             paraPtr = JumpIfFalse(lst,iter,params)
@@ -148,6 +186,7 @@ def Compute(lst,input):
                 iter += 3
             else:
                 para = lst[paraPtr]
+                iter = paraPtr
                 jump = True
         elif params[0] == 7:
             lst = LessThan(lst,iter,params)
